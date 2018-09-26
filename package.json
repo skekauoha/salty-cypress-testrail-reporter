@@ -1,0 +1,41 @@
+{
+  "name": "salty-cypress-testrail-reporter",
+  "version": "1.0.0",
+  "description": "A Testrail reporter for cypress including TestRail API basic library",
+  "main": "index.js",
+  "private": false,
+  "keywords": ["cypress", "testrail", "reporter"],
+  "author": {
+    "name": "Spencer Kekauoha",
+    "email": "skekauoha@saltstack.gmail.com"
+  },
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skekauoha/salty-cypress-testrail-reporter"
+  },
+  "bugs": {
+    "url": ""
+  },
+  "scripts": {
+    "tsc": "tsc",
+    "clean": "rimraf dist",
+    "build": "npm run clean && npm run tsc"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "btoa": "^1.1.2",
+    "chalk": "^2.4.1",
+    "mocha": "^2.2.5",
+    "moment": "^2.22.1"
+  },
+  "devDependencies": {
+    "@types/chai": "^3.4.34",
+    "@types/mocha": "^2.2.36",
+    "@types/node": "^6.0.58",
+    "chai": "^3.5.0",
+    "rimraf": "^2.5.4",
+    "typescript": "^2.1.4"
+  }
+}
