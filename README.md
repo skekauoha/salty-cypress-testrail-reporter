@@ -6,6 +6,11 @@
 
 Publishes [Cypress](https://www.cypress.io/) runs on TestRail.
 
+Based off of the original package [cypress-testrail-reporter](https://github.com/Vivify-Ideas/cypress-testrail-reporter) by [Milutin Savovic](https://github.com/mickosav)
+
+The original package by Milutin is awesome!  Milutin's original cypress-testrail-reporter package creates a new test run everytime you run `cypress run` or `cypress open`.  I tweaked the package to just update an existing test run on testrail.
+
+
 ## Install
 
 ```shell
@@ -73,8 +78,6 @@ You can read the whole TestRail documentation [here](http://docs.gurock.com/).
 ## Author
 
 Author: Spencer Kekauoha - [github](https://github.com/skekauoha)
-
-The original package by Milutin is awesome!  We needed different functionality.  The main difference with this package and the original is that this package does not create a test run but instead updates an already existing test run.
 
 ## License
 
