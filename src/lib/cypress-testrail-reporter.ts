@@ -21,13 +21,6 @@ export class CypressTestRailReporter extends reporters.Spec {
     this.validate(reporterOptions, 'suiteId');
     this.validate(reporterOptions, 'runId');
 
-    // runner.on('start', () => {
-    //   const executionDateTime = moment().format('MMM Do YYYY, HH:mm (Z)');
-    //   const name = `${reporterOptions.runName || 'Automated test run'} ${executionDateTime}`;
-    //   const description = 'For the Cypress run visit https://dashboard.cypress.io/#/projects/runs';
-    //   this.testRail.createRun(name, description);
-    // });
-
     runner.on('pass', test => {
       const caseIds = titleToCaseIds(test.title);
       if (caseIds.length > 0) {
@@ -64,8 +57,6 @@ export class CypressTestRailReporter extends reporters.Spec {
           'No testcases were matched. Ensure that your tests are declared correctly and matches Cxxx',
           '\n'
         );
-        this.testRail.deleteRun();
-
         return;
       }
 

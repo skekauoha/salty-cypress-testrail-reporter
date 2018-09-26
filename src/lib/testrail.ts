@@ -10,28 +10,6 @@ export class TestRail {
     this.base = `https://${options.domain}/index.php?/api/v2`;
   }
 
-  public createRun(name: string, description: string) {
-    axios({
-      method: 'post',
-      url: `${this.base}/add_run/${this.options.projectId}`,
-      headers: { 'Content-Type': 'application/json' },
-      auth: {
-        username: this.options.username,
-        password: this.options.password,
-      },
-      data: JSON.stringify({
-        suite_id: this.options.suiteId,
-        name,
-        description,
-        include_all: true,
-      }),
-    })
-      .then(response => {
-        this.runId = response.data.id;
-      })
-      .catch(error => console.error(error));
-  }
-
   public deleteRun() {
     axios({
       method: 'post',
