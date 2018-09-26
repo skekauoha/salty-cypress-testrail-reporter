@@ -1,0 +1,1 @@
+# salty-cypress-testrail-reporter
