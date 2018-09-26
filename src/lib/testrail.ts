@@ -10,18 +10,6 @@ export class TestRail {
     this.base = `https://${options.domain}/index.php?/api/v2`;
   }
 
-  public deleteRun() {
-    axios({
-      method: 'post',
-      url: `${this.base}/delete_run/${this.runId}`,
-      headers: { 'Content-Type': 'application/json' },
-      auth: {
-        username: this.options.username,
-        password: this.options.password,
-      },
-    }).catch(error => console.error(error));
-  }
-
   public publishResults(results: TestRailResult[]) {
     this.runId = this.options.runId;
     axios({

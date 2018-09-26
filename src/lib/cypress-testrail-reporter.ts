@@ -1,5 +1,4 @@
 import { reporters } from 'mocha';
-import * as moment from 'moment';
 import { TestRail } from './testrail';
 import { titleToCaseIds } from './shared';
 import { Status, TestRailResult } from './testrail.interface';

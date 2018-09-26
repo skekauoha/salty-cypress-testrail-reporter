@@ -11,7 +11,7 @@
   ],
   "author": {
     "name": "Spencer Kekauoha",
-    "email": "skekauoha@saltstack.gmail.com"
+    "email": "spkekauoha@gmail.com"
   },
   "license": "MIT",
   "readmeFilename": "README.md",
@@ -31,8 +31,7 @@
     "axios": "^0.18.0",
     "btoa": "^1.1.2",
     "chalk": "^2.4.1",
-    "mocha": "^2.2.5",
-    "moment": "^2.22.2"
+    "mocha": "^2.2.5"
   },
   "devDependencies": {
     "@types/chai": "^3.4.34",

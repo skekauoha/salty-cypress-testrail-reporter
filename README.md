@@ -9,7 +9,7 @@ Publishes [Cypress](https://www.cypress.io/) runs on TestRail.
 ## Install
 
 ```shell
-$ npm install cypress-testrail-reporter --save-dev
+$ npm install salty-cypress-testrail-reporter --save-dev
 ```
 
 ## Usage
@@ -18,13 +18,17 @@ Add reporter to your `cypress.json`:
 
 ```json
 ...
-"reporter": "cypress-testrail-reporter",
-"reporterOptions": {
-  "domain": "yourdomain.testrail.com",
-  "username": "username",
-  "password": "password",
-  "projectId": 1,
-  "suiteId": 1,
+{
+  "reporter": "salty-cypress-testrail-reporter",
+  "reporterOptions": {
+    "domain": "yourdomain.testrail.com",
+    "username": "username",
+    "password": "password",
+    "projectId": idNumber,
+    "suiteId": suiteNumber,
+    "runId": testRunNumber,
+    "runName": "Test Run Name"
+  }
 }
 ```
 
@@ -52,6 +56,8 @@ it("Can authenticate a valid userC123", ...
 
 **suiteId**: _number_ suite with which the tests are associated.
 
+**runId**: _number_ a specific test run id number.
+
 **runName**: _string_ (optional) name of the Testrail run.
 
 ## TestRail Settings
@@ -66,7 +72,9 @@ You can read the whole TestRail documentation [here](http://docs.gurock.com/).
 
 ## Author
 
-Milutin Savovic - [github](https://github.com/mickosav)
+Author: Spencer Kekauoha - [github](https://github.com/skekauoha)
+
+The original package by Milutin is awesome!  We needed different functionality.  The main difference with this package and the original is that this package does not create a test run but instead updates an already existing test run.
 
 ## License
 
@@ -74,5 +82,6 @@ This project is licensed under the [MIT license](/LICENSE.md).
 
 ## Acknowledgments
 
+* [Milutin Savovic](https://github.com/mickosav), author of the [cypress-testrail-reporter](https://github.com/Vivify-Ideas/cypress-testrail-reporter) repository that was cloned.
 * [Pierre Awaragi](https://github.com/awaragi), owner of the [mocha-testrail-reporter](https://github.com/awaragi/mocha-testrail-reporter) repository that was forked.
 * [Valerie Thoma](https://github.com/ValerieThoma) and [Aileen Santos](https://github.com/asantos3026) for proofreading the README.md file and making it more understandable.
