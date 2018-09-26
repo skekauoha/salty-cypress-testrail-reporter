@@ -4,7 +4,7 @@ import { TestRailOptions, TestRailResult } from './testrail.interface';
 
 export class TestRail {
   private base: String;
-  private runId: Number = 310;
+  private runId: Number;
 
   constructor(private options: TestRailOptions) {
     this.base = `https://${options.domain}/index.php?/api/v2`;
@@ -45,6 +45,7 @@ export class TestRail {
   }
 
   public publishResults(results: TestRailResult[]) {
+    this.runId = this.options.runId;
     axios({
       method: 'post',
       url: `${this.base}/add_results_for_cases/${this.runId}`,

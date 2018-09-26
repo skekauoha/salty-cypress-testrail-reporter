@@ -27,6 +27,7 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
         _this.validate(reporterOptions, 'password');
         _this.validate(reporterOptions, 'projectId');
         _this.validate(reporterOptions, 'suiteId');
+        _this.validate(reporterOptions, 'runId');
         // runner.on('start', () => {
         //   const executionDateTime = moment().format('MMM Do YYYY, HH:mm (Z)');
         //   const name = `${reporterOptions.runName || 'Automated test run'} ${executionDateTime}`;
