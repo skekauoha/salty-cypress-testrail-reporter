@@ -4,7 +4,7 @@ import { TestRailOptions, TestRailResult } from './testrail.interface';
 
 export class TestRail {
   private base: String;
-  private runId: Number;
+  private runId: Number = 310;
 
   constructor(private options: TestRailOptions) {
     this.base = `https://${options.domain}/index.php?/api/v2`;
