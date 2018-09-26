@@ -7,17 +7,6 @@ var TestRail = /** @class */ (function () {
         this.options = options;
         this.base = "https://" + options.domain + "/index.php?/api/v2";
     }
-    TestRail.prototype.deleteRun = function () {
-        axios({
-            method: 'post',
-            url: this.base + "/delete_run/" + this.runId,
-            headers: { 'Content-Type': 'application/json' },
-            auth: {
-                username: this.options.username,
-                password: this.options.password,
-            },
-        }).catch(function (error) { return console.error(error); });
-    };
     TestRail.prototype.publishResults = function (results) {
         var _this = this;
         this.runId = this.options.runId;
