@@ -33,7 +33,17 @@ export class TestRail {
   }
 
   public publishResults(results: TestRailResult[]) {
-    this.runId = this.options.runId;
+
+    if (this.options.createTestRun) {
+      console.log({
+          optionsRunId: this.options.runId,
+          createdRunId: this.runId
+      });
+    }
+    else {
+        this.runId = this.options.runId;
+    }
+
     axios({
       method: 'post',
       url: `${this.base}/add_results_for_cases/${this.runId}`,

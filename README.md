@@ -8,7 +8,9 @@ Publishes [Cypress](https://www.cypress.io/) runs on TestRail.
 
 Cloned from the original package [cypress-testrail-reporter](https://github.com/Vivify-Ideas/cypress-testrail-reporter) by [Milutin Savovic](https://github.com/mickosav)
 
-The original package by Milutin is awesome!  Milutin's original cypress-testrail-reporter package creates a new test run everytime you run `cypress run` or `cypress open`.  I tweaked the package to just update an existing test run on testrail.
+The original package by Milutin is awesome!
+
+Allows for options to create a new test run on **cypress run** or if you want the option to create one manually.
 
 
 ## Install
@@ -31,6 +33,7 @@ Add reporter to your `cypress.json`:
     "password": "password",
     "projectId": idNumber,
     "suiteId": suiteNumber,
+    "createTestRun": "boolean",
     "runId": testRunNumber,
     "runName": "Test Run Name"
   }
@@ -61,7 +64,9 @@ it("Can authenticate a valid userC123", ...
 
 **suiteId**: _number_ suite with which the tests are associated.
 
-**runId**: _number_ a specific test run id number.
+**createTestRun**: _boolean_ **true** if you want a test run created for you : **false** if you want to manually create your own test run on TestRail.  If you select **false**, you have to pass a value into the runID property.
+
+**runId**: _number_ (optional: only necessary if createTestRun is set to true) a specific test run id number.
 
 **runName**: _string_ (optional) name of the Testrail run.
 
