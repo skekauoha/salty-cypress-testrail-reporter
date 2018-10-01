@@ -31,13 +31,7 @@ var TestRail = /** @class */ (function () {
     };
     TestRail.prototype.publishResults = function (results) {
         var _this = this;
-        if (this.options.createTestRun) {
-            console.log({
-                optionsRunId: this.options.runId,
-                createdRunId: this.runId
-            });
-        }
-        else {
+        if (!this.options.createTestRun) {
             this.runId = this.options.runId;
         }
         axios({

@@ -34,14 +34,8 @@ export class TestRail {
 
   public publishResults(results: TestRailResult[]) {
 
-    if (this.options.createTestRun) {
-      console.log({
-          optionsRunId: this.options.runId,
-          createdRunId: this.runId
-      });
-    }
-    else {
-        this.runId = this.options.runId;
+    if (!this.options.createTestRun) {
+      this.runId = this.options.runId;
     }
 
     axios({
