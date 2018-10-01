@@ -7,6 +7,28 @@ var TestRail = /** @class */ (function () {
         this.options = options;
         this.base = "https://" + options.domain + "/index.php?/api/v2";
     }
+    TestRail.prototype.createRun = function (name, description) {
+        var _this = this;
+        axios({
+            method: 'post',
+            url: this.base + "/add_run/" + this.options.projectId,
+            headers: { 'Content-Type': 'application/json' },
+            auth: {
+                username: this.options.username,
+                password: this.options.password,
+            },
+            data: JSON.stringify({
+                suite_id: this.options.suiteId,
+                name: name,
+                description: description,
+                include_all: true,
+            }),
+        })
+            .then(function (response) {
+            _this.runId = response.data.id;
+        })
+            .catch(function (error) { return console.error(error); });
+    };
     TestRail.prototype.publishResults = function (results) {
         var _this = this;
         this.runId = this.options.runId;

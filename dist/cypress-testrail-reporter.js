@@ -11,6 +11,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var mocha_1 = require("mocha");
+var moment = require("moment");
 var testrail_1 = require("./testrail");
 var shared_1 = require("./shared");
 var testrail_interface_1 = require("./testrail.interface");
@@ -28,6 +29,14 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
         _this.validate(reporterOptions, 'projectId');
         _this.validate(reporterOptions, 'suiteId');
         _this.validate(reporterOptions, 'runId');
+        _this.validate(reporterOptions, 'createTestRun');
+        runner.on('start', function () {
+            var executionDateTime = moment().format('MMM Do YYYY, HH:mm (Z)');
+            var name = (reporterOptions.runName || 'Automated test run') + " " + executionDateTime;
+            var description = 'For the Cypress run visit https://dashboard.cypress.io/#/projects/runs';
+            reporterOptions.createTestRun === true && _this.testRail.createRun(name, description);
+            return;
+        });
         runner.on('pass', function (test) {
             var _a;
             var caseIds = shared_1.titleToCaseIds(test.title);
