@@ -15,7 +15,6 @@ export class CypressTestRailReporter extends reporters.Spec {
 
     let reporterOptions = options.reporterOptions;
     this.testRail = new TestRail(reporterOptions);
-    this.isRun = false;
     this.validate(reporterOptions, 'domain');
     this.validate(reporterOptions, 'username');
     this.validate(reporterOptions, 'password');
@@ -31,7 +30,7 @@ export class CypressTestRailReporter extends reporters.Spec {
 
       this.isRun = this.testRail.isRunToday();
 
-      if (this.isRun) {
+      if (!this.isRun) {
         reporterOptions.createTestRun === true && this.testRail.createRun(name, description);
       }
       return;
