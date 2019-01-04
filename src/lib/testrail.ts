@@ -33,12 +33,27 @@ export class TestRail {
       // }),
     })
       .then(response => {
+        console.log(`
+        
+        
+        RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  
+        ${response}
+        
+        `)
         this.runDate = response.data[0].description;
       })
       .catch(error => console.error(error));
 
     // set current date with same format as this.runDate
     this.currentDate = moment(new Date()).format('L');
+
+    console.log(`
+    
+    CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE 
+
+    ${this.currentDate}, ${this.runDate}
+    
+    `)
 
     // If the runDate of the most current test run is equal to today's date, don't create a new test run.
     if (this.runDate !== this.currentDate) {

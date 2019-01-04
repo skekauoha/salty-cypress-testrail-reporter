@@ -22,11 +22,13 @@ var TestRail = /** @class */ (function () {
             },
         })
             .then(function (response) {
+            console.log("\n        \n        \n        RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  \n        " + response + "\n        \n        ");
             _this.runDate = response.data[0].description;
         })
             .catch(function (error) { return console.error(error); });
         // set current date with same format as this.runDate
         this.currentDate = moment(new Date()).format('L');
+        console.log("\n    \n    CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE \n\n    " + this.currentDate + ", " + this.runDate + "\n    \n    ");
         // If the runDate of the most current test run is equal to today's date, don't create a new test run.
         if (this.runDate !== this.currentDate) {
             axios({
