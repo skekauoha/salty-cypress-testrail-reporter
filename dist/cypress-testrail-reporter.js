@@ -35,11 +35,13 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
             var executionDateTime = moment().format('L');
             var name = (reporterOptions.runName || 'Automated test run') + " - " + executionDateTime;
             var description = executionDateTime;
-            _this.isRun = _this.testRail.isRunToday();
-            console.log("IS RUN IS RUN IS RUN IS RUN IS RUN IS RUN ", _this.isRun);
-            if (!_this.isRun) {
-                reporterOptions.createTestRun === true && _this.testRail.createRun(name, description);
-            }
+            _this.testRail.isRunToday().then(function (res) {
+                _this.isRun = res;
+                console.log("IS RUN IS RUN IS RUN IS RUN IS RUN IS RUN ", _this.isRun);
+                if (!_this.isRun) {
+                    reporterOptions.createTestRun === true && _this.testRail.createRun(name, description);
+                }
+            });
         });
         runner.on('pass', function (test) {
             var _a;
