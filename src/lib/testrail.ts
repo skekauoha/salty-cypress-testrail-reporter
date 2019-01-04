@@ -47,11 +47,11 @@ export class TestRail {
         `)
 
         if (this.runDate === this.currentDate) {
-          console.log('TRUE TRUE TRUE TRUE TRUE TRUE ')
-          return true;
+          console.log('FALSE FALSE FALSE FALSE FALSE FALSE ')
+          return false;
         }
-        console.log('FALSE FALSE FALSE FALSE FALSE FALSE ')
-        return false;
+        console.log('TRUE TRUE TRUE TRUE TRUE TRUE ')
+        return true;
       })
       // .catch(error => console.error(error));
   }

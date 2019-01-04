@@ -28,11 +28,11 @@ var TestRail = /** @class */ (function () {
             _this.currentDate = moment(new Date()).format('L');
             console.log("\n      \n        CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE \n    \n        current: " + _this.currentDate + ", run: " + _this.runDate + "\n        \n        ");
             if (_this.runDate === _this.currentDate) {
-                console.log('TRUE TRUE TRUE TRUE TRUE TRUE ');
-                return true;
+                console.log('FALSE FALSE FALSE FALSE FALSE FALSE ');
+                return false;
             }
-            console.log('FALSE FALSE FALSE FALSE FALSE FALSE ');
-            return false;
+            console.log('TRUE TRUE TRUE TRUE TRUE TRUE ');
+            return true;
         });
         // .catch(error => console.error(error));
     };
