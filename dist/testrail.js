@@ -55,9 +55,10 @@ var TestRail = /** @class */ (function () {
             }),
         })
             .then(function (response) {
+            console.log('RUNNNNING: ', response.data.id);
             _this.runId = response.data.id;
-        })
-            .catch(function (error) { return console.error(error); });
+        });
+        // .catch(error => console.(error));
     };
     TestRail.prototype.publishResults = function (results) {
         var _this = this;

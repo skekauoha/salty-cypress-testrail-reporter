@@ -75,9 +75,10 @@ export class TestRail {
       }),
     })
       .then(response => {
+          console.log('RUNNNNING: ', response.data.id);
           this.runId = response.data.id;
       })
-      .catch(error => console.error(error));
+      // .catch(error => console.(error));
   }
 
   public publishResults(results: TestRailResult[]) {
