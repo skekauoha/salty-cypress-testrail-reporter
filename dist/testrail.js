@@ -29,10 +29,10 @@ var TestRail = /** @class */ (function () {
             console.log("\n      \n        CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE \n    \n        current: " + _this.currentDate + ", run: " + _this.runDate + "\n        \n        ");
             if (_this.runDate === _this.currentDate) {
                 console.log('TRUE TRUE TRUE TRUE TRUE TRUE ');
-                return false;
+                return true;
             }
             console.log('FALSE FALSE FALSE FALSE FALSE FALSE ');
-            return true;
+            return false;
         });
         // .catch(error => console.error(error));
     };

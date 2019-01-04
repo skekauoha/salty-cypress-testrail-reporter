@@ -48,10 +48,10 @@ export class TestRail {
 
         if (this.runDate === this.currentDate) {
           console.log('TRUE TRUE TRUE TRUE TRUE TRUE ')
-          return false;
+          return true;
         }
         console.log('FALSE FALSE FALSE FALSE FALSE FALSE ')
-        return true;
+        return false;
       })
       // .catch(error => console.error(error));
   }
