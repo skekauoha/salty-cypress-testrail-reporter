@@ -13,7 +13,7 @@ var TestRail = /** @class */ (function () {
         var _this = this;
         // Get all runs and get the date of the most current run
         axios({
-            method: 'post',
+            method: 'get',
             url: this.base + "/get_runs/" + this.projectId,
             headers: { 'Content-Type': 'application/json' },
             auth: {
