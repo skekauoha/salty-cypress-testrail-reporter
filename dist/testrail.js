@@ -11,6 +11,9 @@ var TestRail = /** @class */ (function () {
     }
     TestRail.prototype.createRun = function (name, description) {
         var _this = this;
+        // set current date with same format as this.runDate
+        this.currentDate = moment(new Date()).format('L');
+        console.log("\n      \n      CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE \n  \n      " + this.currentDate + ", " + this.runDate + "\n      \n      ");
         // Get all runs and get the date of the most current run
         axios({
             method: 'get',
@@ -22,13 +25,11 @@ var TestRail = /** @class */ (function () {
             },
         })
             .then(function (response) {
-            console.log("\n        \n        \n        RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  \n        " + response + "\n        \n        ");
+            console.log("\n        \n        \n        RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  \n        " + response.data[0].description + "\n        \n        ");
             _this.runDate = response.data[0].description;
         })
             .catch(function (error) { return console.error(error); });
-        // set current date with same format as this.runDate
-        this.currentDate = moment(new Date()).format('L');
-        console.log("\n    \n    CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE \n\n    " + this.currentDate + ", " + this.runDate + "\n    \n    ");
+        console.log("\n      \n      RUNDATE RUNDATE RUNDATE RUNDATE RUNDATE RUNDATE RUNDATE RUNDATE RUNDATE RUNDATE \n  \n      " + this.currentDate + ", " + this.runDate + "\n      \n      ");
         // If the runDate of the most current test run is equal to today's date, don't create a new test run.
         if (this.runDate !== this.currentDate) {
             axios({

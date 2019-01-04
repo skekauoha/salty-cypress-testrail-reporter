@@ -33,7 +33,7 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
             console.log("Running Test Case");
             var executionDateTime = moment().format('L');
             var name = (reporterOptions.runName || 'Automated test run') + " - " + executionDateTime;
-            var description = "" + executionDateTime;
+            var description = executionDateTime;
             reporterOptions.createTestRun === true && _this.testRail.createRun(name, description);
             return;
         });
