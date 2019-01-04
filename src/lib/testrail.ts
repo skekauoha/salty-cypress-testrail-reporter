@@ -102,6 +102,7 @@ export class TestRail {
       })
 
     const publishToAPI = () => {
+      console.log('inside publish fn', results)
       axios({
         method: 'post',
         url: `${this.base}/add_results_for_cases/${this.runId}`,

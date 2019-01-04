@@ -79,6 +79,7 @@ var TestRail = /** @class */ (function () {
             publishToAPI();
         });
         var publishToAPI = function () {
+            console.log('inside publish fn', results);
             axios({
                 method: 'post',
                 url: _this.base + "/add_results_for_cases/" + _this.runId,

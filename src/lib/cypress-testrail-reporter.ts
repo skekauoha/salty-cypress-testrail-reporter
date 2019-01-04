@@ -81,7 +81,7 @@ export class CypressTestRailReporter extends reporters.Spec {
         );
         return;
       }
-
+      console.log('RESULTS RESULTS RESULTS RESULTS ', this.results)
       this.testRail.publishResults(this.results);
     });
   }

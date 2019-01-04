@@ -78,6 +78,7 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
                 console.warn('\n', 'No testcases were matched. Ensure that your tests are declared correctly and matches Cxxx', '\n');
                 return;
             }
+            console.log('RESULTS RESULTS RESULTS RESULTS ', _this.results);
             _this.testRail.publishResults(_this.results);
         });
         return _this;
