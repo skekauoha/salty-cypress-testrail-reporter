@@ -23,6 +23,7 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
         _this.results = [];
         var reporterOptions = options.reporterOptions;
         _this.testRail = new testrail_1.TestRail(reporterOptions);
+        _this.isRun = false;
         _this.validate(reporterOptions, 'domain');
         _this.validate(reporterOptions, 'username');
         _this.validate(reporterOptions, 'password');
@@ -38,7 +39,6 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
             if (!_this.isRun) {
                 reporterOptions.createTestRun === true && _this.testRail.createRun(name, description);
             }
-            return;
         });
         runner.on('pass', function (test) {
             var _a;
