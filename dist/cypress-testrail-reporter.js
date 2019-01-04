@@ -36,6 +36,7 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
             var name = (reporterOptions.runName || 'Automated test run') + " - " + executionDateTime;
             var description = executionDateTime;
             _this.isRun = _this.testRail.isRunToday();
+            console.log("IS RUN IS RUN IS RUN IS RUN IS RUN IS RUN ", _this.isRun);
             if (!_this.isRun) {
                 reporterOptions.createTestRun === true && _this.testRail.createRun(name, description);
             }
