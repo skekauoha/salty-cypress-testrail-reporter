@@ -88,25 +88,38 @@ export class TestRail {
     }
 
     axios({
-      method: 'post',
-      url: `${this.base}/add_results_for_cases/${this.runId}`,
+      method: 'get',
+      url: `${this.base}/get_runs/${this.projectId}`,
       headers: { 'Content-Type': 'application/json' },
       auth: {
-        username: this.options.username,
-        password: this.options.password,
-      },
-      data: JSON.stringify({ results }),
+          username: this.options.username,
+          password: this.options.password,
+      }
     })
       .then(response => {
-        console.log('\n', chalk.magenta.underline.bold('(TestRail Reporter)'));
-        console.log(
-          '\n',
-          ` - Results are published to ${chalk.magenta(
-            `https://${this.options.domain}/index.php?/runs/view/${this.runId}`
-          )}`,
-          '\n'
-        );
+        this.runId = response.data[0].id;
+
+        axios({
+          method: 'post',
+          url: `${this.base}/add_results_for_cases/${this.runId}`,
+          headers: { 'Content-Type': 'application/json' },
+          auth: {
+            username: this.options.username,
+            password: this.options.password,
+          },
+          data: JSON.stringify({ results }),
+        })
+          .then(response => {
+            console.log('\n', chalk.magenta.underline.bold('(TestRail Reporter)'));
+            console.log(
+              '\n',
+              ` - Results are published to ${chalk.magenta(
+                `https://${this.options.domain}/index.php?/runs/view/${this.runId}`
+              )}`,
+              '\n'
+            );
+          })
+          .catch(error => console.error(error));
       })
-      .catch(error => console.error(error));
   }
 }
