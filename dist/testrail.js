@@ -20,12 +20,6 @@ var TestRail = /** @class */ (function () {
                 username: this.options.username,
                 password: this.options.password,
             },
-            data: JSON.stringify({
-                suite_id: this.options.suiteId,
-                name: name,
-                description: description,
-                include_all: true,
-            }),
         })
             .then(function (response) {
             _this.runDate = response.data[0].description;
