@@ -38,6 +38,8 @@ export class CypressTestRailReporter extends reporters.Spec {
         if (!this.isRun) {
           reporterOptions.createTestRun === true && this.testRail.createRun(name, description);
         }
+
+        return;
       });
     });
 

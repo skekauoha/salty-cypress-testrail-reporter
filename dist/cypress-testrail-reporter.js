@@ -41,6 +41,7 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
                 if (!_this.isRun) {
                     reporterOptions.createTestRun === true && _this.testRail.createRun(name, description);
                 }
+                return;
             });
         });
         runner.on('pass', function (test) {

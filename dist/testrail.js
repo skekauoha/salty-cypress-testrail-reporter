@@ -76,6 +76,9 @@ var TestRail = /** @class */ (function () {
         })
             .then(function (response) {
             _this.runId = response.data[0].id;
+            publishToAPI();
+        });
+        var publishToAPI = function () {
             axios({
                 method: 'post',
                 url: _this.base + "/add_results_for_cases/" + _this.runId,
@@ -91,7 +94,7 @@ var TestRail = /** @class */ (function () {
                 console.log('\n', " - Results are published to " + chalk.magenta("https://" + _this.options.domain + "/index.php?/runs/view/" + _this.runId), '\n');
             })
                 .catch(function (error) { return console.error(error); });
-        });
+        };
     };
     return TestRail;
 }());
