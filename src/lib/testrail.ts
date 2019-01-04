@@ -41,7 +41,7 @@ export class TestRail {
     this.currentDate = moment(new Date()).format('L');
 
     // If the runDate of the most current test run is equal to today's date, don't create a new test run.
-    if (this.runDate === this.currentDate) {
+    if (this.runDate !== this.currentDate) {
       axios({
         method: 'post',
         url: `${this.base}/add_run/${this.options.projectId}`,
