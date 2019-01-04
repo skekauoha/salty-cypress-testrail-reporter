@@ -14,34 +14,16 @@ export class TestRail {
     this.base = `https://${options.domain}/index.php?/api/v2`;
   }
 
-  public createRun(name: string, description: string) {
-
-      // set current date with same format as this.runDate
-      this.currentDate = moment(new Date()).format('L');
-
-      console.log(`
-      
-      CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE 
-  
-      ${this.currentDate}, ${this.runDate}
-      
-      `)
-    
+  public isRunToday() {
     // Get all runs and get the date of the most current run
-    axios({
+    return axios({
       method: 'get',
       url: `${this.base}/get_runs/${this.projectId}`,
       headers: { 'Content-Type': 'application/json' },
       auth: {
           username: this.options.username,
           password: this.options.password,
-      },
-      // data: JSON.stringify({
-      //     suite_id: this.options.suiteId,
-      //     name,
-      //     description,
-      //     include_all: true,
-      // }),
+      }
     })
       .then(response => {
         console.log(`
@@ -52,41 +34,50 @@ export class TestRail {
         
         `)
         this.runDate = response.data[0].description;
-      })
-      .catch(error => console.error(error));
 
-      console.log(`
+        // set current date with same format as this.runDate
+        this.currentDate = moment(new Date()).format('L');
+
+        console.log(`
       
-      RUNDATE RUNDATE RUNDATE RUNDATE RUNDATE RUNDATE RUNDATE RUNDATE RUNDATE RUNDATE 
-  
-      ${this.currentDate}, ${this.runDate}
-      
-      `)
+        CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE 
+    
+        current: ${this.currentDate}, run: ${this.runDate}
+        
+        `)
+
+        if (this.runDate === this.currentDate) {
+          console.log('TRUE TRUE TRUE TRUE TRUE TRUE ')
+          return true;
+        }
+        console.log('FALSE FALSE FALSE FALSE FALSE FALSE ')
+        return false;
+      })
+      // .catch(error => console.error(error));
+  }
+
+  public createRun(name: string, description: string) {
 
     // If the runDate of the most current test run is equal to today's date, don't create a new test run.
-    if (this.runDate !== this.currentDate) {
-      axios({
-        method: 'post',
-        url: `${this.base}/add_run/${this.options.projectId}`,
-        headers: { 'Content-Type': 'application/json' },
-        auth: {
-            username: this.options.username,
-            password: this.options.password,
-        },
-        data: JSON.stringify({
-            suite_id: this.options.suiteId,
-            name,
-            description,
-            include_all: true,
-        }),
+    axios({
+      method: 'post',
+      url: `${this.base}/add_run/${this.options.projectId}`,
+      headers: { 'Content-Type': 'application/json' },
+      auth: {
+          username: this.options.username,
+          password: this.options.password,
+      },
+      data: JSON.stringify({
+          suite_id: this.options.suiteId,
+          name,
+          description,
+          include_all: true,
+      }),
+    })
+      .then(response => {
+          this.runId = response.data.id;
       })
-        .then(response => {
-            this.runId = response.data.id;
-        })
-        .catch(error => console.error(error));
-    }
-
-    return;
+      .catch(error => console.error(error));
   }
 
   public publishResults(results: TestRailResult[]) {

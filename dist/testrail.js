@@ -9,50 +9,55 @@ var TestRail = /** @class */ (function () {
         this.projectId = 2;
         this.base = "https://" + options.domain + "/index.php?/api/v2";
     }
-    TestRail.prototype.createRun = function (name, description) {
+    TestRail.prototype.isRunToday = function () {
         var _this = this;
-        // set current date with same format as this.runDate
-        this.currentDate = moment(new Date()).format('L');
-        console.log("\n      \n      CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE \n  \n      " + this.currentDate + ", " + this.runDate + "\n      \n      ");
         // Get all runs and get the date of the most current run
-        axios({
+        return axios({
             method: 'get',
             url: this.base + "/get_runs/" + this.projectId,
             headers: { 'Content-Type': 'application/json' },
             auth: {
                 username: this.options.username,
                 password: this.options.password,
-            },
+            }
         })
             .then(function (response) {
             console.log("\n        \n        \n        RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  \n        DATA: " + response.data[0].description + ", ID: " + response.data[0].id + "\n        \n        ");
             _this.runDate = response.data[0].description;
+            // set current date with same format as this.runDate
+            _this.currentDate = moment(new Date()).format('L');
+            console.log("\n      \n        CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE \n    \n        current: " + _this.currentDate + ", run: " + _this.runDate + "\n        \n        ");
+            if (_this.runDate === _this.currentDate) {
+                console.log('TRUE TRUE TRUE TRUE TRUE TRUE ');
+                return true;
+            }
+            console.log('FALSE FALSE FALSE FALSE FALSE FALSE ');
+            return false;
+        });
+        // .catch(error => console.error(error));
+    };
+    TestRail.prototype.createRun = function (name, description) {
+        var _this = this;
+        // If the runDate of the most current test run is equal to today's date, don't create a new test run.
+        axios({
+            method: 'post',
+            url: this.base + "/add_run/" + this.options.projectId,
+            headers: { 'Content-Type': 'application/json' },
+            auth: {
+                username: this.options.username,
+                password: this.options.password,
+            },
+            data: JSON.stringify({
+                suite_id: this.options.suiteId,
+                name: name,
+                description: description,
+                include_all: true,
+            }),
+        })
+            .then(function (response) {
+            _this.runId = response.data.id;
         })
             .catch(function (error) { return console.error(error); });
-        console.log("\n      \n      RUNDATE RUNDATE RUNDATE RUNDATE RUNDATE RUNDATE RUNDATE RUNDATE RUNDATE RUNDATE \n  \n      " + this.currentDate + ", " + this.runDate + "\n      \n      ");
-        // If the runDate of the most current test run is equal to today's date, don't create a new test run.
-        if (this.runDate !== this.currentDate) {
-            axios({
-                method: 'post',
-                url: this.base + "/add_run/" + this.options.projectId,
-                headers: { 'Content-Type': 'application/json' },
-                auth: {
-                    username: this.options.username,
-                    password: this.options.password,
-                },
-                data: JSON.stringify({
-                    suite_id: this.options.suiteId,
-                    name: name,
-                    description: description,
-                    include_all: true,
-                }),
-            })
-                .then(function (response) {
-                _this.runId = response.data.id;
-            })
-                .catch(function (error) { return console.error(error); });
-        }
-        return;
     };
     TestRail.prototype.publishResults = function (results) {
         var _this = this;

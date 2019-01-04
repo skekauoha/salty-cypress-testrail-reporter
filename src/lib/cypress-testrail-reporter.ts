@@ -8,12 +8,14 @@ const chalk = require('chalk');
 export class CypressTestRailReporter extends reporters.Spec {
   private results: TestRailResult[] = [];
   private testRail: TestRail;
+  private isRun: boolean;
 
   constructor(runner: any, options: any) {
     super(runner);
 
     let reporterOptions = options.reporterOptions;
     this.testRail = new TestRail(reporterOptions);
+    this.isRun = false;
     this.validate(reporterOptions, 'domain');
     this.validate(reporterOptions, 'username');
     this.validate(reporterOptions, 'password');
@@ -27,7 +29,11 @@ export class CypressTestRailReporter extends reporters.Spec {
       const name = `${reporterOptions.runName || 'Automated test run'} - ${executionDateTime}`;
       const description = executionDateTime;
 
-      reporterOptions.createTestRun === true && this.testRail.createRun(name, description);
+      this.isRun = this.testRail.isRunToday();
+
+      if (!this.isRun) {
+        reporterOptions.createTestRun === true && this.testRail.createRun(name, description);
+      }
       return;
     });
 
