@@ -22,10 +22,10 @@ export class CypressTestRailReporter extends reporters.Spec {
     this.validate(reporterOptions, 'createTestRun');
 
     runner.on('start', () => {
-      console.log("TEST CASE RUNNER IS STARTING!!!!!!!!!!!")
-      const executionDateTime = moment().format('MMM Do YYYY, HH:mm (Z)');
+      console.log("Running Test Case")
+      const executionDateTime = moment().format('L');
       const name = `${reporterOptions.runName || 'Automated test run'} - ${executionDateTime}`;
-      const description = 'For the Cypress run visit https://dashboard.cypress.io/#/projects/runs';
+      const description = `${executionDateTime}`;
 
       reporterOptions.createTestRun === true && this.testRail.createRun(name, description);
       return;

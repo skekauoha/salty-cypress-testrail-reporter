@@ -30,9 +30,10 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
         _this.validate(reporterOptions, 'suiteId');
         _this.validate(reporterOptions, 'createTestRun');
         runner.on('start', function () {
-            var executionDateTime = moment().format('MMM Do YYYY, HH:mm (Z)');
+            console.log("Running Test Case");
+            var executionDateTime = moment().format('L');
             var name = (reporterOptions.runName || 'Automated test run') + " - " + executionDateTime;
-            var description = 'For the Cypress run visit https://dashboard.cypress.io/#/projects/runs';
+            var description = "" + executionDateTime;
             reporterOptions.createTestRun === true && _this.testRail.createRun(name, description);
             return;
         });
