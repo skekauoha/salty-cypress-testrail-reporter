@@ -48,7 +48,7 @@ export class TestRail {
         
         
         RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  
-        DATA: ${response.data[0]}, ID: ${response.data[0].id}
+        DATA: ${response.data[0].description}, ID: ${response.data[0].id}
         
         `)
         this.runDate = response.data[0].description;
