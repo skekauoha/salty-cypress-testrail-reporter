@@ -31,7 +31,7 @@ export class CypressTestRailReporter extends reporters.Spec {
 
       this.isRun = this.testRail.isRunToday();
 
-      if (!this.isRun) {
+      if (this.isRun) {
         reporterOptions.createTestRun === true && this.testRail.createRun(name, description);
       }
       return;
