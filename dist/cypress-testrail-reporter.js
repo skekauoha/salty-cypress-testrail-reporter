@@ -39,7 +39,7 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
                 _this.isRun = res;
                 console.log("ISRUN IS: ", _this.isRun);
                 if (!_this.isRun) {
-                    reporterOptions.createTestRun === true && _this.testRail.createRun(name, description);
+                    return reporterOptions.createTestRun === true && _this.testRail.createRun(name, description);
                 }
             });
         });

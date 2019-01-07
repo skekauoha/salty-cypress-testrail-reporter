@@ -23,22 +23,22 @@ var TestRail = /** @class */ (function () {
         })
             .then(function (response) {
             console.log("RESPONSE DATA: " + response.data[0].description + ", ID: " + response.data[0].id);
-            _this.runDate = response.data[0].description;
-            // set current date with same format as this.runDate
+            _this.lastRunDate = response.data[0].description;
+            // set current date with same format as this.lastRunDate
             _this.currentDate = moment(new Date()).format('L');
-            console.log("\n      \n        CURRENTDATE: " + _this.currentDate + ", RUNDATE: " + _this.runDate);
-            if (_this.runDate === _this.currentDate) {
-                console.log('TRUE: rundate === currentDate');
+            console.log("CURRENTDATE: " + _this.currentDate + ", LASTRUNDATE: " + _this.lastRunDate);
+            if (_this.lastRunDate === _this.currentDate) {
+                console.log('TRUE: lastRunDate === currentDate');
                 return true;
             }
-            console.log('FALSE: rundate !== currentDate');
+            console.log('FALSE: lastRunDate !== currentDate');
             return false;
         });
         // .catch(error => console.error(error));
     };
     TestRail.prototype.createRun = function (name, description) {
         var _this = this;
-        // If the runDate of the most current test run is equal to today's date, don't create a new test run.
+        // If the lastRunDate of the most current test run is equal to today's date, don't create a new test run.
         axios({
             method: 'post',
             url: this.base + "/add_run/" + this.options.projectId,

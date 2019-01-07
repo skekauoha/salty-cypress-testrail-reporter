@@ -7,7 +7,7 @@ export class TestRail {
   private base: String;
   private runId: Number;
   private projectId: Number = 2;
-  private runDate: string;
+  private lastRunDate: string;
   private currentDate: string;
 
   constructor(private options: TestRailOptions) {
@@ -28,21 +28,19 @@ export class TestRail {
       .then(response => {
         console.log(`RESPONSE DATA: ${response.data[0].description}, ID: ${response.data[0].id}`)
 
-        this.runDate = response.data[0].description;
+        this.lastRunDate = response.data[0].description;
 
-        // set current date with same format as this.runDate
+        // set current date with same format as this.lastRunDate
         this.currentDate = moment(new Date()).format('L');
 
-        console.log(`
-      
-        CURRENTDATE: ${this.currentDate}, RUNDATE: ${this.runDate}`)
+        console.log(`CURRENTDATE: ${this.currentDate}, LASTRUNDATE: ${this.lastRunDate}`)
 
 
-        if (this.runDate === this.currentDate) {
-          console.log('TRUE: rundate === currentDate')
+        if (this.lastRunDate === this.currentDate) {
+          console.log('TRUE: lastRunDate === currentDate')
           return true;
         }
-        console.log('FALSE: rundate !== currentDate')
+        console.log('FALSE: lastRunDate !== currentDate')
         return false;
       })
       // .catch(error => console.error(error));
@@ -50,7 +48,7 @@ export class TestRail {
 
   public createRun(name: string, description: string) {
 
-    // If the runDate of the most current test run is equal to today's date, don't create a new test run.
+    // If the lastRunDate of the most current test run is equal to today's date, don't create a new test run.
     axios({
       method: 'post',
       url: `${this.base}/add_run/${this.options.projectId}`,
