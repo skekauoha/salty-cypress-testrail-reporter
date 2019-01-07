@@ -37,7 +37,7 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
             var description = executionDateTime;
             _this.testRail.isRunToday().then(function (res) {
                 _this.isRun = res;
-                console.log("IS RUN IS RUN IS RUN IS RUN IS RUN IS RUN ", _this.isRun);
+                console.log("ISRUN IS: ", _this.isRun);
                 if (!_this.isRun) {
                     reporterOptions.createTestRun === true && _this.testRail.createRun(name, description);
                 }
@@ -46,6 +46,7 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
         runner.on('pass', function (test) {
             var _a;
             var caseIds = shared_1.titleToCaseIds(test.title);
+            console.log('PASSED: ', caseIds);
             if (caseIds.length > 0) {
                 var results = caseIds.map(function (caseId) {
                     return {
@@ -60,6 +61,7 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
         runner.on('fail', function (test) {
             var _a;
             var caseIds = shared_1.titleToCaseIds(test.title);
+            console.log('FAILED: ', caseIds);
             if (caseIds.length > 0) {
                 var results = caseIds.map(function (caseId) {
                     return {
@@ -77,7 +79,7 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
                 console.warn('\n', 'No testcases were matched. Ensure that your tests are declared correctly and matches Cxxx', '\n');
                 return;
             }
-            console.log('RESULTS RESULTS RESULTS RESULTS ', _this.results);
+            console.log('ON END RESULTS: ', _this.results);
             _this.testRail.publishResults(_this.results);
         });
         return _this;

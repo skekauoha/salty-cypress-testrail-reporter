@@ -32,8 +32,7 @@ export class CypressTestRailReporter extends reporters.Spec {
       this.testRail.isRunToday().then(res => {
         this.isRun = res;
 
-        console.log(`IS RUN IS RUN IS RUN IS RUN IS RUN IS RUN `,
-        this.isRun)
+        console.log(`ISRUN IS: `, this.isRun)
 
         if (!this.isRun) {
           reporterOptions.createTestRun === true && this.testRail.createRun(name, description);
@@ -43,6 +42,7 @@ export class CypressTestRailReporter extends reporters.Spec {
 
     runner.on('pass', test => {
       const caseIds = titleToCaseIds(test.title);
+      console.log('PASSED: ', caseIds);
       if (caseIds.length > 0) {
         const results = caseIds.map(caseId => {
           return {
@@ -57,6 +57,7 @@ export class CypressTestRailReporter extends reporters.Spec {
 
     runner.on('fail', test => {
       const caseIds = titleToCaseIds(test.title);
+      console.log('FAILED: ', caseIds);
       if (caseIds.length > 0) {
         const results = caseIds.map(caseId => {
           return {
@@ -79,7 +80,7 @@ export class CypressTestRailReporter extends reporters.Spec {
         );
         return;
       }
-      console.log('RESULTS RESULTS RESULTS RESULTS ', this.results)
+      console.log('ON END RESULTS: ', this.results)
       this.testRail.publishResults(this.results);
     });
   }

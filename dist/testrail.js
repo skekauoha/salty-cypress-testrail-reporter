@@ -22,16 +22,16 @@ var TestRail = /** @class */ (function () {
             }
         })
             .then(function (response) {
-            console.log("\n        \n        \n        RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  \n        DATA: " + response.data[0].description + ", ID: " + response.data[0].id + "\n        \n        ");
+            console.log("RESPONSE DATA: " + response.data[0].description + ", ID: " + response.data[0].id);
             _this.runDate = response.data[0].description;
             // set current date with same format as this.runDate
             _this.currentDate = moment(new Date()).format('L');
-            console.log("\n      \n        CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE \n    \n        current: " + _this.currentDate + ", run: " + _this.runDate + "\n        \n        ");
+            console.log("\n      \n        CURRENTDATE: " + _this.currentDate + ", RUNDATE: " + _this.runDate);
             if (_this.runDate === _this.currentDate) {
-                console.log('TRUE TRUE TRUE TRUE TRUE TRUE ');
+                console.log('TRUE: rundate === currentDate');
                 return true;
             }
-            console.log('FALSE FALSE FALSE FALSE FALSE FALSE ');
+            console.log('FALSE: rundate !== currentDate');
             return false;
         });
         // .catch(error => console.error(error));
@@ -55,7 +55,7 @@ var TestRail = /** @class */ (function () {
             }),
         })
             .then(function (response) {
-            console.log('RUNNNNING: ', response.data.id);
+            console.log('CREATING TEST RUN... -> run id is:  ', response.data.id);
             _this.runId = response.data.id;
         });
         // .catch(error => console.(error));
@@ -79,7 +79,7 @@ var TestRail = /** @class */ (function () {
             publishToAPI();
         });
         var publishToAPI = function () {
-            console.log('inside publish fn', results);
+            console.log('Results to publish to api: ', results);
             axios({
                 method: 'post',
                 url: _this.base + "/add_results_for_cases/" + _this.runId,

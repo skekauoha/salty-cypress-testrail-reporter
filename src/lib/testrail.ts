@@ -26,13 +26,8 @@ export class TestRail {
       }
     })
       .then(response => {
-        console.log(`
-        
-        
-        RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  RESPONSE  
-        DATA: ${response.data[0].description}, ID: ${response.data[0].id}
-        
-        `)
+        console.log(`RESPONSE DATA: ${response.data[0].description}, ID: ${response.data[0].id}`)
+
         this.runDate = response.data[0].description;
 
         // set current date with same format as this.runDate
@@ -40,17 +35,14 @@ export class TestRail {
 
         console.log(`
       
-        CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE CURRENTDATE 
-    
-        current: ${this.currentDate}, run: ${this.runDate}
-        
-        `)
+        CURRENTDATE: ${this.currentDate}, RUNDATE: ${this.runDate}`)
+
 
         if (this.runDate === this.currentDate) {
-          console.log('TRUE TRUE TRUE TRUE TRUE TRUE ')
+          console.log('TRUE: rundate === currentDate')
           return true;
         }
-        console.log('FALSE FALSE FALSE FALSE FALSE FALSE ')
+        console.log('FALSE: rundate !== currentDate')
         return false;
       })
       // .catch(error => console.error(error));
@@ -75,7 +67,7 @@ export class TestRail {
       }),
     })
       .then(response => {
-          console.log('RUNNNNING: ', response.data.id);
+          console.log('CREATING TEST RUN... -> run id is:  ', response.data.id);
           this.runId = response.data.id;
       })
       // .catch(error => console.(error));
@@ -102,7 +94,7 @@ export class TestRail {
       })
 
     const publishToAPI = () => {
-      console.log('inside publish fn', results)
+      console.log('Results to publish to api: ', results)
       axios({
         method: 'post',
         url: `${this.base}/add_results_for_cases/${this.runId}`,
