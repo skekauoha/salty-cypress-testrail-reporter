@@ -70,6 +70,9 @@ it("Can authenticate a valid userC123", ...
 
 **runName**: _string_ (optional) name of the Testrail run.
 
+# Functionality Update 01/04/2019
+When setting `createTestRun: true`, the testrail reporter will create a single testrun for the day and push all results to that newly created testrun.  Before this update, the testrail reporter would create a testrun for each spec file that was run. 
+
 ## TestRail Settings
 
 To increase security, the TestRail team suggests using an API key instead of a password. You can see how to generate an API key [here](http://docs.gurock.com/testrail-api2/accessing#username_and_api_key).
