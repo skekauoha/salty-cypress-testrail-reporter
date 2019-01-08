@@ -31,22 +31,20 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
         _this.validate(reporterOptions, 'suiteId');
         _this.validate(reporterOptions, 'createTestRun');
         runner.on('start', function () {
-            console.log("Running Test Case");
+            console.log("Running Test Case...");
             var executionDateTime = moment().format('L');
             var name = (reporterOptions.runName || 'Automated test run') + " - " + executionDateTime;
             var description = executionDateTime;
             _this.testRail.isRunToday().then(function (res) {
                 _this.isRun = res;
-                console.log("ISRUN IS: ", _this.isRun);
                 if (!_this.isRun) {
-                    return reporterOptions.createTestRun === true && _this.testRail.createRun(name, description);
+                    reporterOptions.createTestRun === true && _this.testRail.createRun(name, description);
                 }
             });
         });
         runner.on('pass', function (test) {
             var _a;
             var caseIds = shared_1.titleToCaseIds(test.title);
-            console.log('PASSED: ', caseIds);
             if (caseIds.length > 0) {
                 var results = caseIds.map(function (caseId) {
                     return {
@@ -61,7 +59,6 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
         runner.on('fail', function (test) {
             var _a;
             var caseIds = shared_1.titleToCaseIds(test.title);
-            console.log('FAILED: ', caseIds);
             if (caseIds.length > 0) {
                 var results = caseIds.map(function (caseId) {
                     return {
@@ -79,7 +76,6 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
                 console.warn('\n', 'No testcases were matched. Ensure that your tests are declared correctly and matches Cxxx', '\n');
                 return;
             }
-            console.log('ON END RESULTS: ', _this.results);
             _this.testRail.publishResults(_this.results);
         });
         return _this;

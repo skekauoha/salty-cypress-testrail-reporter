@@ -11,7 +11,6 @@ var TestRail = /** @class */ (function () {
     }
     TestRail.prototype.isRunToday = function () {
         var _this = this;
-        // Get all runs and get the date of the most current run
         return axios({
             method: 'get',
             url: this.base + "/get_runs/" + this.projectId,
@@ -20,18 +19,14 @@ var TestRail = /** @class */ (function () {
                 username: this.options.username,
                 password: this.options.password,
             }
-        })
-            .then(function (response) {
-            console.log("RESPONSE DATA: " + response.data[0].description + ", ID: " + response.data[0].id);
+        }).then(function (response) {
             _this.lastRunDate = response.data[0].description;
             // set current date with same format as this.lastRunDate
             _this.currentDate = moment(new Date()).format('L');
-            console.log("CURRENTDATE: " + _this.currentDate + ", LASTRUNDATE: " + _this.lastRunDate);
             if (_this.lastRunDate === _this.currentDate) {
-                console.log('TRUE: lastRunDate === currentDate');
+                console.log("Test Run already created today. posting results to Test Run ID: R" + response.data[0].id);
                 return true;
             }
-            console.log('FALSE: lastRunDate !== currentDate');
             return false;
         });
         // .catch(error => console.error(error));
@@ -55,7 +50,7 @@ var TestRail = /** @class */ (function () {
             }),
         })
             .then(function (response) {
-            console.log('CREATING TEST RUN... -> run id is:  ', response.data.id);
+            console.log('Creating test run... ---> run id is:  ', response.data.id);
             _this.runId = response.data.id;
         });
         // .catch(error => console.(error));
@@ -79,7 +74,6 @@ var TestRail = /** @class */ (function () {
             publishToAPI();
         });
         var publishToAPI = function () {
-            console.log('Results to publish to api: ', results);
             axios({
                 method: 'post',
                 url: _this.base + "/add_results_for_cases/" + _this.runId,

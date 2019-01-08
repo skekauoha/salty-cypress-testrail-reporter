@@ -24,7 +24,7 @@ export class CypressTestRailReporter extends reporters.Spec {
     this.validate(reporterOptions, 'createTestRun');
 
     runner.on('start', () => {
-      console.log("Running Test Case")
+      console.log("Running Test Case...")
       const executionDateTime = moment().format('L');
       const name = `${reporterOptions.runName || 'Automated test run'} - ${executionDateTime}`;
       const description = executionDateTime;
@@ -32,17 +32,14 @@ export class CypressTestRailReporter extends reporters.Spec {
       this.testRail.isRunToday().then(res => {
         this.isRun = res;
 
-        console.log(`ISRUN IS: `, this.isRun)
-
         if (!this.isRun) {
-          return reporterOptions.createTestRun === true && this.testRail.createRun(name, description);
+          reporterOptions.createTestRun === true && this.testRail.createRun(name, description);
         }
       });
     });
 
     runner.on('pass', test => {
       const caseIds = titleToCaseIds(test.title);
-      console.log('PASSED: ', caseIds);
       if (caseIds.length > 0) {
         const results = caseIds.map(caseId => {
           return {
@@ -57,7 +54,6 @@ export class CypressTestRailReporter extends reporters.Spec {
 
     runner.on('fail', test => {
       const caseIds = titleToCaseIds(test.title);
-      console.log('FAILED: ', caseIds);
       if (caseIds.length > 0) {
         const results = caseIds.map(caseId => {
           return {
@@ -80,7 +76,6 @@ export class CypressTestRailReporter extends reporters.Spec {
         );
         return;
       }
-      console.log('ON END RESULTS: ', this.results)
       this.testRail.publishResults(this.results);
     });
   }

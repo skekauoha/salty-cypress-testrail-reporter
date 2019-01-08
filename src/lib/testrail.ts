@@ -15,7 +15,6 @@ export class TestRail {
   }
 
   public isRunToday() {
-    // Get all runs and get the date of the most current run
     return axios({
       method: 'get',
       url: `${this.base}/get_runs/${this.projectId}`,
@@ -24,23 +23,16 @@ export class TestRail {
           username: this.options.username,
           password: this.options.password,
       }
-    })
-      .then(response => {
-        console.log(`RESPONSE DATA: ${response.data[0].description}, ID: ${response.data[0].id}`)
-
+    }).then(response => {
         this.lastRunDate = response.data[0].description;
 
         // set current date with same format as this.lastRunDate
         this.currentDate = moment(new Date()).format('L');
 
-        console.log(`CURRENTDATE: ${this.currentDate}, LASTRUNDATE: ${this.lastRunDate}`)
-
-
         if (this.lastRunDate === this.currentDate) {
-          console.log('TRUE: lastRunDate === currentDate')
+          console.log(`Test Run already created today. posting results to Test Run ID: R${response.data[0].id}`)
           return true;
         }
-        console.log('FALSE: lastRunDate !== currentDate')
         return false;
       })
       // .catch(error => console.error(error));
@@ -65,7 +57,7 @@ export class TestRail {
       }),
     })
       .then(response => {
-          console.log('CREATING TEST RUN... -> run id is:  ', response.data.id);
+          console.log('Creating test run... ---> run id is:  ', response.data.id);
           this.runId = response.data.id;
       })
       // .catch(error => console.(error));
@@ -92,7 +84,6 @@ export class TestRail {
       })
 
     const publishToAPI = () => {
-      console.log('Results to publish to api: ', results)
       axios({
         method: 'post',
         url: `${this.base}/add_results_for_cases/${this.runId}`,
