@@ -6,14 +6,13 @@ var moment = require("moment");
 var TestRail = /** @class */ (function () {
     function TestRail(options) {
         this.options = options;
-        this.projectId = 2;
         this.base = "https://" + options.domain + "/index.php?/api/v2";
     }
     TestRail.prototype.isRunToday = function () {
         var _this = this;
         return axios({
             method: 'get',
-            url: this.base + "/get_runs/" + this.projectId,
+            url: this.base + "/get_runs/" + this.options.projectId,
             headers: { 'Content-Type': 'application/json' },
             auth: {
                 username: this.options.username,
@@ -62,7 +61,7 @@ var TestRail = /** @class */ (function () {
         }
         axios({
             method: 'get',
-            url: this.base + "/get_runs/" + this.projectId,
+            url: this.base + "/get_runs/" + this.options.projectId,
             headers: { 'Content-Type': 'application/json' },
             auth: {
                 username: this.options.username,
