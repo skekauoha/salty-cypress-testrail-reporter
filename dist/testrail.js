@@ -73,9 +73,12 @@ var TestRail = /** @class */ (function () {
             publishToAPI();
         });
         var publishToAPI = function () {
+            var runId = !_this.options.createTestRun && _this.options.runId
+                ? _this.options.runId
+                : _this.runId;
             axios({
                 method: 'post',
-                url: _this.base + "/add_results_for_cases/" + _this.runId,
+                url: _this.base + "/add_results_for_cases/" + runId,
                 headers: { 'Content-Type': 'application/json' },
                 auth: {
                     username: _this.options.username,
@@ -85,7 +88,7 @@ var TestRail = /** @class */ (function () {
             })
                 .then(function (response) {
                 console.log('\n', chalk.magenta.underline.bold('(TestRail Reporter)'));
-                console.log('\n', " - Results are published to " + chalk.magenta("https://" + _this.options.domain + "/index.php?/runs/view/" + _this.runId), '\n');
+                console.log('\n', " - Results are published to " + chalk.magenta("https://" + _this.options.domain + "/index.php?/runs/view/" + runId + "!"), '\n');
             })
                 .catch(function (error) { return console.error(error); });
         };

@@ -83,10 +83,14 @@ export class TestRail {
         publishToAPI();
       })
 
-    const publishToAPI = () => {
+   const publishToAPI = () => {
+      const runId = !this.options.createTestRun && this.options.runId
+        ? this.options.runId
+        : this.runId
+
       axios({
         method: 'post',
-        url: `${this.base}/add_results_for_cases/${this.runId}`,
+        url: `${this.base}/add_results_for_cases/${runId}`,
         headers: { 'Content-Type': 'application/json' },
         auth: {
           username: this.options.username,
@@ -99,7 +103,7 @@ export class TestRail {
           console.log(
             '\n',
             ` - Results are published to ${chalk.magenta(
-              `https://${this.options.domain}/index.php?/runs/view/${this.runId}`
+              `https://${this.options.domain}/index.php?/runs/view/${runId}`
             )}`,
             '\n'
           );
