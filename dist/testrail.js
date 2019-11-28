@@ -88,7 +88,7 @@ var TestRail = /** @class */ (function () {
             })
                 .then(function (response) {
                 console.log('\n', chalk.magenta.underline.bold('(TestRail Reporter)'));
-                console.log('\n', " - Results are published to " + chalk.magenta("https://" + _this.options.domain + "/index.php?/runs/view/" + runId + "!"), '\n');
+                console.log('\n', " - Results are published to " + chalk.magenta("https://" + _this.options.domain + "/index.php?/runs/view/" + runId), '\n');
             })
                 .catch(function (error) { return console.error(error); });
         };
