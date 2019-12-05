@@ -6,7 +6,7 @@ import moment = require('moment');
 export class TestRail {
   private base: String;
   private runId: Number;
-  private projectId: Number = 2;
+  private projectId: Number;
   private lastRunDate: string;
   private currentDate: string;
 
@@ -17,7 +17,7 @@ export class TestRail {
   public isRunToday() {
     return axios({
       method: 'get',
-      url: `${this.base}/get_runs/${this.projectId}`,
+      url: `${this.base}/get_runs/${this.options.projectId}`,
       headers: { 'Content-Type': 'application/json' },
       auth: {
           username: this.options.username,
@@ -71,7 +71,7 @@ export class TestRail {
 
     axios({
       method: 'get',
-      url: `${this.base}/get_runs/${this.projectId}`,
+      url: `${this.base}/get_runs/${this.options.projectId}`,
       headers: { 'Content-Type': 'application/json' },
       auth: {
           username: this.options.username,
