@@ -8,14 +8,14 @@ const chalk = require('chalk');
 export class CypressTestRailReporter extends reporters.Spec {
   private results: TestRailResult[] = [];
   private testRail: TestRail;
-  private isRun: boolean;
+  private hasBeenCreatedToday: boolean;
 
   constructor(runner: any, options: any) {
     super(runner);
 
     let reporterOptions = options.reporterOptions;
     this.testRail = new TestRail(reporterOptions);
-    this.isRun = false;
+    this.hasBeenCreatedToday = false;
     this.validate(reporterOptions, 'domain');
     this.validate(reporterOptions, 'username');
     this.validate(reporterOptions, 'password');
@@ -26,16 +26,19 @@ export class CypressTestRailReporter extends reporters.Spec {
     runner.on('start', () => {
       console.log("Running Test Case...")
       const executionDateTime = moment().format('L');
-      const name = `${reporterOptions.runName || 'Automated test run'} - ${executionDateTime}`;
+      const name = `${reporterOptions.runName || 'Automated Test Run'} - ${executionDateTime}`;
       const description = executionDateTime;
 
-      this.testRail.isRunToday().then(res => {
-        this.isRun = res;
+        if (reporterOptions.createTestRun === true) {
+            this.testRail.isRunToday().then(res => {
+                this.hasBeenCreatedToday = res;
+                console.log(this.hasBeenCreatedToday)
 
-        if (!this.isRun) {
-          reporterOptions.createTestRun === true && this.testRail.createRun(name, description);
+                if (!this.hasBeenCreatedToday) {
+                    this.testRail.createRun(name, description);
+                }
+            });    
         }
-      });
     });
 
     runner.on('pass', test => {
