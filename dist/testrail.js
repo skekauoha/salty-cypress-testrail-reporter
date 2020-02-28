@@ -19,13 +19,11 @@ var TestRail = /** @class */ (function () {
                 password: this.options.password,
             }
         }).then(function (response) {
-            console.log("Created On: " + response.data[0].created_on);
-            console.log("Original with Description: " + response.data[0].description);
-            _this.lastRunDate = moment(response.data[0].created_on).format("L"); // (formats it to 02/24/2020)
+            _this.lastRunDate = moment.unix(response.data[0].created_on).format('MM/DD/YYYY');
             // set current date with same format as this.lastRunDate
             _this.currentDate = moment(new Date()).format('L');
             if (_this.lastRunDate === _this.currentDate) {
-                console.log("Test Run already created today. posting results to Test Run ID: R" + response.data[0].id);
+                console.log("Test Run already created today. Posting results to Test Run ID: R" + response.data[0].id);
                 return true;
             }
             return false;
@@ -51,19 +49,12 @@ var TestRail = /** @class */ (function () {
             }),
         })
             .then(function (response) {
-            console.log('Creating test run... ---> run id is:  ', response.data.id);
+            console.log('Creating Test Run... ---> Run id is:  ', response.data.id);
             _this.runId = response.data.id;
         });
         // .catch(error => console.(error));
     };
     TestRail.prototype.publishResults = function (results) {
-        /**
-         * IF createTestRun === false
-         * ... then use given runId
-         * IF createTestRun === true
-         * ...then use ID of recently created test run
-         *
-         */
         var _this = this;
         var publishToAPI = function () {
             axios({
@@ -75,17 +66,14 @@ var TestRail = /** @class */ (function () {
                     password: _this.options.password,
                 },
                 data: JSON.stringify({ results: results }),
-            })
-                .then(function (response) {
+            }).then(function (response) {
                 console.log('\n', chalk.magenta.underline.bold('(TestRail Reporter)'));
                 console.log('\n', " - Results are published to " + chalk.magenta("https://" + _this.options.domain + "/index.php?/runs/view/" + _this.runId), '\n');
-            })
-                .catch(function (error) { return console.error(error); });
+            }).catch(function (error) { return console.error(error); });
         };
         if (!this.options.createTestRun) {
             this.runId = this.options.runId;
-            console.log("THIS IS LOGGED IF USING EXISTING GIVEN RUNID");
-            console.log(this.runId);
+            console.log("Publishing results to existing run: " + this.runId);
             publishToAPI();
         }
         else {
@@ -98,8 +86,8 @@ var TestRail = /** @class */ (function () {
                     password: this.options.password,
                 }
             }).then(function (response) {
-                _this.runId = response.data[0].id; // this may be overriding the IF runId so nested in else?
-                console.log("RUNID is from latest run: " + _this.runId);
+                _this.runId = response.data[0].id;
+                console.log("Publishing results to latest run: " + _this.runId);
                 publishToAPI();
             });
         }

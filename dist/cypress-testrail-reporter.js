@@ -33,21 +33,9 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
         runner.on('start', function () {
             console.log("Running Test Case...");
             var executionDateTime = moment().format('L');
-            var name = (reporterOptions.runName || 'Automated test run') + " - " + executionDateTime;
+            var name = (reporterOptions.runName || 'Automated Test Run') + " - " + executionDateTime;
             var description = executionDateTime;
-            /**
-             * If createRun === true
-             * ...then check if a Test Run was created today
-             *        ...If Test Run created today
-             *            ...then do NOT create test run
-             *        ...ELSE if no test run created today
-             *            ...then create a NEW test run
-             *
-             * If createRun === false
-             * ...then do nothing
-             *
-             */
-            if (reporterOptions.createTestRun === true) { // if want to createRun then...
+            if (reporterOptions.createTestRun === true) {
                 _this.testRail.isRunToday().then(function (res) {
                     _this.hasBeenCreatedToday = res;
                     console.log(_this.hasBeenCreatedToday);
