@@ -26,23 +26,10 @@ export class CypressTestRailReporter extends reporters.Spec {
     runner.on('start', () => {
       console.log("Running Test Case...")
       const executionDateTime = moment().format('L');
-      const name = `${reporterOptions.runName || 'Automated test run'} - ${executionDateTime}`;
+      const name = `${reporterOptions.runName || 'Automated Test Run'} - ${executionDateTime}`;
       const description = executionDateTime;
 
-      /**
-       * If createRun === true
-       * ...then check if a Test Run was created today
-       *        ...If Test Run created today
-       *            ...then do NOT create test run
-       *        ...ELSE if no test run created today
-       *            ...then create a NEW test run
-       * 
-       * If createRun === false
-       * ...then do nothing
-       * 
-       */
-
-        if (reporterOptions.createTestRun === true) { // if want to createRun then...
+        if (reporterOptions.createTestRun === true) {
             this.testRail.isRunToday().then(res => {
                 this.hasBeenCreatedToday = res;
                 console.log(this.hasBeenCreatedToday)
