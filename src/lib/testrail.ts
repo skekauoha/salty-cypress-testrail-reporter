@@ -25,9 +25,7 @@ export class TestRail {
       }
     }).then(response => {
 
-        this.lastRunDate = moment(response.data[0].created_on).format("L"); // (formats it to 02/24/2020)
-        console.log(this.lastRunDate);
-       
+        this.lastRunDate = moment.unix(response.data[0].created_on).format('MM/DD/YYYY')
         // set current date with same format as this.lastRunDate
         this.currentDate = moment(new Date()).format('L');
 
@@ -59,7 +57,7 @@ export class TestRail {
       }),
     })
       .then(response => {
-          console.log('Creating test run... ---> run id is:  ', response.data.id);
+          console.log('Creating Test Run... ---> Run id is:  ', response.data.id);
           this.runId = response.data.id;
       })
       // .catch(error => console.(error));
