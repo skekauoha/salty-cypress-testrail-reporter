@@ -24,8 +24,11 @@ export class TestRail {
           password: this.options.password,
       }
     }).then(response => {
-        this.lastRunDate = response.data[0].description;
+        console.log(`Created On: ${response.data[0].created_on}`);
+        console.log(`Original with Description: ${response.data[0].description}`);
 
+
+        this.lastRunDate = moment(response.data[0].created_on).format("L"); // (formats it to 02/24/2020)
         // set current date with same format as this.lastRunDate
         this.currentDate = moment(new Date()).format('L');
 
@@ -65,46 +68,57 @@ export class TestRail {
 
   public publishResults(results: TestRailResult[]) {
 
-    if (!this.options.createTestRun) {
-      this.runId = this.options.runId;
-    }
-
-    axios({
-      method: 'get',
-      url: `${this.base}/get_runs/${this.options.projectId}`,
-      headers: { 'Content-Type': 'application/json' },
-      auth: {
-          username: this.options.username,
-          password: this.options.password,
-      }
-    })
-      .then(response => {
-        this.runId = response.data[0].id;
-        publishToAPI();
-      })
+    /**
+     * IF createTestRun === false
+     * ... then use given runId
+     * IF createTestRun === true
+     * ...then use ID of recently created test run
+     * 
+     */
 
     const publishToAPI = () => {
-      axios({
-        method: 'post',
-        url: `${this.base}/add_results_for_cases/${this.runId}`,
-        headers: { 'Content-Type': 'application/json' },
-        auth: {
-          username: this.options.username,
-          password: this.options.password,
-        },
-        data: JSON.stringify({ results }),
-      })
-        .then(response => {
-          console.log('\n', chalk.magenta.underline.bold('(TestRail Reporter)'));
-          console.log(
-            '\n',
-            ` - Results are published to ${chalk.magenta(
-              `https://${this.options.domain}/index.php?/runs/view/${this.runId}`
-            )}`,
-            '\n'
-          );
+        axios({
+          method: 'post',
+          url: `${this.base}/add_results_for_cases/${this.runId}`,
+          headers: { 'Content-Type': 'application/json' },
+          auth: {
+            username: this.options.username,
+            password: this.options.password,
+          },
+          data: JSON.stringify({ results }),
         })
-          .catch(error => console.error(error));
+          .then(response => {
+            console.log('\n', chalk.magenta.underline.bold('(TestRail Reporter)'));
+            console.log(
+              '\n',
+              ` - Results are published to ${chalk.magenta(
+                `https://${this.options.domain}/index.php?/runs/view/${this.runId}`
+              )}`,
+              '\n'
+            );
+          })
+            .catch(error => console.error(error));
+      }
+
+    if (!this.options.createTestRun) {
+      this.runId = this.options.runId;
+      console.log("THIS IS LOGGED IF USING EXISTING GIVEN RUNID");
+      console.log(this.runId);
+      publishToAPI();
+    } else {
+        axios({
+            method: 'get',
+            url: `${this.base}/get_runs/${this.options.projectId}`,
+            headers: { 'Content-Type': 'application/json' },
+            auth: {
+                username: this.options.username,
+                password: this.options.password,
+            }
+          }).then(response => {
+              this.runId = response.data[0].id; // this may be overriding the IF runId so nested in else?
+              console.log(`RUNID is from latest run: ${this.runId}`);
+              publishToAPI();
+          })
     }
   }
 }
